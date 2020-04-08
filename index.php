@@ -37,16 +37,28 @@ include "header.php"; ?>
 
       </tr>
 
-    <?php foreach ( $results['lists'] as $list ) { ?>
+    <?php foreach ( $results['lists'] as $list ) {
+      $listNumber = $list->id ?>
       <tr>
-        <td><?php echo $list->name?></td>
+        <td><b><?php echo $list->name?></b></td>
+        <?php $taskData = Task::getByList((int) $listNumber);
+          $results['tasks'] = $taskData['results']; ?>
 
+
+
+          <?php foreach ( $results['tasks'] as $task ) { ?>
+            <tr>
+              <td><?php echo $task->description ?></td>
+              <td><?php echo $task->status ?></td>
+
+            </tr>
+          <?php } ?>
       </tr>
+
     <?php } ?>
     </table>
-<?php $test =   Task::getById((int) 2);
- echo  $test->description;
-?>
+
+
 
 
 

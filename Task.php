@@ -60,15 +60,36 @@ public static function getList( $numRows=1000000, $order=" ASC" ) {
   return ( array ( "results" => $list ) );
 }
 
-public static function getById( $list_id ) {
+public static function getById( $id ) {
+  $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+  $sql = "SELECT * FROM tasks WHERE id = :id";
+  $st = $conn->prepare( $sql );
+  $st->bindValue( ":id", $id, PDO::PARAM_INT );
+  $st->execute();
+   $row = $st->fetch();
+   $conn = null;
+  if ( $row ) return new Task( $row );
+}
+
+public static function getByList( $list_id ) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $sql = "SELECT * FROM tasks WHERE list_id = :list_id";
   $st = $conn->prepare( $sql );
   $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
   $st->execute();
-  $row = $st->fetch();
+  // $row = $st->fetch();
+  // $conn = null;
+  $list = array();
+
+  while ( $row = $st->fetch() ) {
+    $task = new Task( $row );
+    $list[] = $task;
+  }
+
+
   $conn = null;
-  if ( $row ) return new Task( $row );
+  return ( array ( "results" => $list ) );
+  // if ( $row ) return new Task( $row );
 }
 
 public function storeTask(){
