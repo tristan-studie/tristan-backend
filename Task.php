@@ -33,7 +33,7 @@ public function __construct($data=array()){
   if (isset($data['description'])) $this->description = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['description']);
   if (isset($data['status'])) $this->status = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['status']);
   if (isset($data['list_id'])) $this->list_id = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['list_id']);
-    if (isset($data['duration'])) $this->duration = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['duration']);
+  if (isset($data['duration'])) $this->duration = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['duration']);
 }
 
 public function storeFormValues($params){
@@ -100,9 +100,9 @@ $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
 $sql = "INSERT INTO tasks (description, duration, status, list_id) VALUES(:description, :duration, :status, :list_id)";
 $st = $conn->prepare($sql);
 $st->bindValue(":description", $this->name, PDO::PARAM_STR);
-$st->bindValue(":duration", $this->name, PDO::PARAM_STR);
-$st->bindValue(":status", $this->name, PDO::PARAM_STR);
-$st->bindValue(":list_id", $this->name, PDO::PARAM_STR);
+$st->bindValue(":duration", $this->duration, PDO::PARAM_STR);
+$st->bindValue(":status", $this->status, PDO::PARAM_STR);
+$st->bindValue(":list_id", $this->list_id, PDO::PARAM_STR);
 $st->execute();
 $this->id = $conn->lastInsertId();
 $conn = null;
