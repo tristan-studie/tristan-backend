@@ -33,7 +33,7 @@ include "header.php"; ?>
 
     <table>
       <tr>
-        <th>Name</th>
+        <th></th>
 
       </tr>
 
@@ -49,10 +49,14 @@ include "header.php"; ?>
           <?php foreach ( $results['tasks'] as $task ) { ?>
             <tr>
               <td><?php echo $task->description ?></td>
+              <td><?php echo $task->duration ?></td>
               <td><?php echo $task->status ?></td>
 
             </tr>
           <?php } ?>
+      </tr>
+      <tr>
+
       </tr>
 
     <?php } ?>

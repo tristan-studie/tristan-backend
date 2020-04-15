@@ -33,7 +33,7 @@ public function __construct($data=array()){
   if (isset($data['description'])) $this->description = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['description']);
   if (isset($data['status'])) $this->status = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['status']);
   if (isset($data['list_id'])) $this->list_id = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['list_id']);
-    if (isset($data['duration'])) $this->list_id = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['duration']);
+    if (isset($data['duration'])) $this->duration = preg_replace("/[^\.\,\-\_\'\"\@\?\!\:\$ a-zA-Z0-9()]/", "", $data['duration']);
 }
 
 public function storeFormValues($params){
