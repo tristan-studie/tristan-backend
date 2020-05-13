@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript">
+    function sortStatus(){
+};
+      </script>
   </head>
   <body>
   	<div class="container">
@@ -30,11 +34,15 @@
       <?php foreach ( $results['lists'] as $list ) {
         $listNumber = $list->id ?>
         <tr>
+
           <td><b><a href="index.php?action=editList&listId= <?php echo $list->id ?>"><?php echo $list->name?></a></b></td>
           <?php $taskData = Task::getByList((int) $listNumber);
             $results['tasks'] = $taskData['results']; ?>
-
-
+            <tr>
+            <th>Name</th>
+            <th>Duration</th>
+            <th onclick="sortStatus()">Status</th>
+            </tr>
 
             <?php foreach ( $results['tasks'] as $task ) { ?>
               <tr>
