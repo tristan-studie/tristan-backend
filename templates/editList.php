@@ -29,7 +29,11 @@
 
       </form>
       <?php if ( $results['list']->id ) { ?>
-            <p><a href="admin.php?action=deleteList&amp;listId=<?php echo $results['list']->id ?>" onclick="return confirm('Delete This list?')">Delete This list</a></p>
-      <?php } ?>
+        <form action="index.php?action=deleteList" method="post"  enctype="multipart/form-data" >
+
+<input type="hidden" name="listId" value="<?php echo $results['list']->id ?>"/>
+            <input type="submit" name="deleteList" value="Delete List" onclick="return confirm('Delete This list?')"></input>
+            </form>
+            <?php } ?>
     </div>
   </main>

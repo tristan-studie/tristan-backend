@@ -30,7 +30,7 @@
       <?php foreach ( $results['lists'] as $list ) {
         $listNumber = $list->id ?>
         <tr>
-          <td><b><?php echo $list->name?></b></td>
+          <td><b><a href="index.php?action=editList&listId= <?php echo $list->id ?>"><?php echo $list->name?></a></b></td>
           <?php $taskData = Task::getByList((int) $listNumber);
             $results['tasks'] = $taskData['results']; ?>
 
@@ -38,12 +38,13 @@
 
             <?php foreach ( $results['tasks'] as $task ) { ?>
               <tr>
-                <td><?php echo $task->description ?></td>
+                <td><a href="index.php?action=editTask&listId=<?php echo $list->id ?>&taskId= <?php echo $task->id ?>"><?php echo $task->description ?></a></td>
                 <td><?php echo $task->duration ?></td>
                 <td><?php echo $task->status ?></td>
 
               </tr>
             <?php } ?>
+                  <tr><td><button onclick="window.location.href='index.php?action=newTask&listId= <?php  echo $list->id?>'" type="button">Add Task</td></tr>
         </tr>
         <tr>
 

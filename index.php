@@ -10,6 +10,18 @@ switch ( $action ) {
   case 'editList':
     editList();
     break;
+  case 'deleteList':
+    deleteList();
+    break;
+  case 'newTask':
+    newTask();
+    break;
+  case 'editTask':
+    editTask();
+    break;
+  case 'deleteTask':
+    deleteTask();
+    break;
   default:
     listLists();
 }
@@ -36,6 +48,31 @@ function newList() {
     $results['list'] = new Lists;
 
     require( TEMPLATE_PATH . "/editList.php" );
+  }
+}
+
+function newTask() {
+
+  $results = array();
+  $results['pageTitle'] = "New Task";
+  $results['formAction'] = "newTask";
+
+  if ( isset( $_POST['saveChanges'] ) ) {
+
+    $list = new Task;
+    $list->storeFormValues( $_POST );
+    $list->storeTask();
+
+    header( "Location: index.php?status=changesSaved" );
+
+  } elseif ( isset( $_POST['cancel'] ) ) {
+
+    header( "Location: index.php" );
+  } else {
+
+    $results['list'] = new Task;
+
+    require( TEMPLATE_PATH . "/editTask.php" );
   }
 }
 
@@ -66,6 +103,79 @@ function editList() {
     require( TEMPLATE_PATH . "/editList.php" );
   }
 
+}
+
+function editTask() {
+
+  $results = array();
+  $results['pageTitle'] = "Edit Task";
+  $results['formAction'] = "editTask";
+
+  if ( isset( $_POST['saveChanges'] ) ) {
+
+    if ( !$list = Task::getById( (int)$_POST['taskId'] ) ) {
+      header( "Location: index.php?error=taskNotFound" );
+      return;
+    }
+
+    $list->storeFormValues( $_POST );
+        $list->update();
+        header( "Location: index.php?status=changesSaved" );
+
+  } elseif ( isset( $_POST['cancel'] ) ) {
+
+
+    header( "Location: index.php" );
+  } else {
+
+    $results['list'] = Task::getById( (int)$_GET['taskId'] );
+    require( TEMPLATE_PATH . "/editTask.php" );
+  }
+
+}
+
+function deleteList() {
+
+  $results = array();
+  $results['pageTitle'] = "Delete List";
+  $results['formAction'] = "deleteList";
+
+  if ( isset( $_POST['deleteList'] ) ) {
+
+    Lists::delete($_POST['listId']);
+
+    header( "Location: index.php?status=listDeleted" );
+
+  } elseif ( isset( $_POST['cancel'] ) ) {
+
+    header( "Location: index.php" );
+  } else {
+
+
+    require( TEMPLATE_PATH . "/editList.php" );
+  }
+}
+
+function deleteTask() {
+
+  $results = array();
+  $results['pageTitle'] = "Delete Task";
+  $results['formAction'] = "deleteTask";
+
+  if ( isset( $_POST['deleteTask'] ) ) {
+
+    Task::delete($_POST['taskId']);
+
+    header( "Location: index.php?status=taskDeleted" );
+
+  } elseif ( isset( $_POST['cancel'] ) ) {
+
+    header( "Location: index.php" );
+  } else {
+
+
+    require( TEMPLATE_PATH . "/editTask.php" );
+  }
 }
 
 function listLists() {

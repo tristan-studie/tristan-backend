@@ -83,14 +83,12 @@ public function update() {
   $conn = null;
 }
 
-public function delete() {
+public static function delete($id) {
 
-
-  if ( is_null( $this->id ) ) trigger_error ( "List::delete(): Attempt to delete a List object that does not have its ID property set.", E_USER_ERROR );
 
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $st = $conn->prepare ( "DELETE FROM lists WHERE id = :id LIMIT 1" );
-  $st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+  $st->bindValue( ":id", $id, PDO::PARAM_INT );
   $st->execute();
   $conn = null;
 }
