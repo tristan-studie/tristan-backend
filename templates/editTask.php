@@ -24,7 +24,17 @@
           </li>
           <li>
             <label for="status">Task Status</label>
-            <input type="text" name="status" id="status" placeholder="Status of the Task" required maxlength="255" value="<?php echo htmlspecialchars( $results['list']->status )?>" />
+            <select name="status" id="status" required value="<?php echo htmlspecialchars( $results['list']->status )?>" >
+              <?php
+
+              foreach ($results['status'] as $statusList) {
+
+                ?>
+                <option value="<?php echo $statusList->status ?>"> <?php echo $statusList->status ?></option>
+
+
+               <?php } ?>
+            </select>
           </li>
           <li>
             <label for="list_id">lijst</label>

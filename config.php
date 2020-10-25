@@ -7,4 +7,12 @@ define("DB_PASSWORD", "mysql");
 define("TEMPLATE_PATH", "templates");
 require("Lists.php");
 require("Task.php");
+require('Status.php');
+
+function handleException( $exception ) {
+  echo $exception->getMessage();
+  error_log( $exception->getMessage() );
+}
+
+set_exception_handler( 'handleException' );
 ?>

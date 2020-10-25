@@ -71,11 +71,20 @@ public static function getById( $id ) {
   if ( $row ) return new Task( $row );
 }
 
-public static function getByList( $list_id ) {
+public static function getByList( $list_id, $sortStatus) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-  $sql = "SELECT * FROM tasks WHERE list_id = :list_id";
-  $st = $conn->prepare( $sql );
-  $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+  if ($sortStatus) {
+    $sql = "SELECT * FROM tasks WHERE list_id = :list_id
+    ORDER BY duration " . $sortStatus;
+    $st = $conn->prepare( $sql );
+    $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+
+  }else {
+    $sql = "SELECT * FROM tasks WHERE list_id = :list_id";
+    $st = $conn->prepare( $sql );
+    $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+  }
+
   $st->execute();
   // $row = $st->fetch();
   // $conn = null;
@@ -91,6 +100,11 @@ public static function getByList( $list_id ) {
   return ( array ( "results" => $list ) );
   // if ( $row ) return new Task( $row );
 }
+
+
+
+
+
 
 public function storeTask(){
 
@@ -113,9 +127,11 @@ public function update() {
   if ( is_null( $this->id ) ) trigger_error ( "Task::update(): Attempt to update a Task object that does not have its ID property set.", E_USER_ERROR );
 
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-  $sql = "UPDATE lists SET name=:name WHERE id = :id";
+  $sql = "UPDATE tasks SET description=:description, duration=:duration, status=:status WHERE id = :id";
       $st = $conn->prepare ( $sql );
-  $st->bindValue( ":name", $this->name, PDO::PARAM_INT );
+  $st->bindValue( ":description", $this->description, PDO::PARAM_INT );
+  $st->bindValue(":duration", $this->duration, PDO::PARAM_INT);
+  $st->bindvalue(":status", $this->status, PDO::PARAM_INT);
   $st->bindValue( ":id", $this->id, PDO::PARAM_INT );
   $st->execute();
   $conn = null;

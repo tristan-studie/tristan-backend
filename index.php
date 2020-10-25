@@ -72,6 +72,9 @@ function newTask() {
 
     $results['list'] = new Task;
 
+
+    $statusResults = Status::getStatus();
+    $results['status'] = $statusResults['results'];
     require( TEMPLATE_PATH . "/editTask.php" );
   }
 }
@@ -129,6 +132,10 @@ function editTask() {
   } else {
 
     $results['list'] = Task::getById( (int)$_GET['taskId'] );
+
+        $statusResults = Status::getStatus();
+        $results['status'] = $statusResults['results'];
+
     require( TEMPLATE_PATH . "/editTask.php" );
   }
 

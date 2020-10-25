@@ -57,6 +57,8 @@ public static function getById( $id ) {
   if ( $row ) return new Lists( $row );
 }
 
+
+
 public function storeList(){
 
 if(!is_null($this->id)) trigger_error("List::insert(): Attempt to insert a List object that already has its ID property set (to $this->id).", E_USER_ERROR);

@@ -1,13 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script type="text/javascript">
-    function sortStatus(){
-};
-      </script>
-  </head>
+<?php require( TEMPLATE_PATH . "/include/header.php" ); ?>
   <body>
   	<div class="container">
 
@@ -21,22 +12,24 @@
       <?php } ?>
 
   		<h1>To-Do List</h1>
-      <button onclick="window.location.href='index.php?action=newList'" type="button">
-
+      <button class="btn btn-primary" onclick="window.location.href='index.php?action=newList'" type="button">
         New List
       </button>
-      <table>
-        <tr>
-          <th></th>
+      <button onclick="window.location.href='index.php?sortStatus=<?php if($_GET['sortStatus'] == 'ASC' || !$_GET['sortStatus']) {
+        $sortStatus = 'DESC';
+      }else{
+        $sortStatus ='ASC';
+      };
+      echo $sortStatus?>'" type="button" name="sortStatus">Sort</button>
+      <table class="table table-sm table-borderless">
 
-        </tr>
 
       <?php foreach ( $results['lists'] as $list ) {
         $listNumber = $list->id ?>
         <tr>
 
           <td><b><a href="index.php?action=editList&listId= <?php echo $list->id ?>"><?php echo $list->name?></a></b></td>
-          <?php $taskData = Task::getByList((int) $listNumber);
+          <?php $taskData = Task::getByList((int ) $listNumber, $_GET['sortStatus']);
             $results['tasks'] = $taskData['results']; ?>
             <tr>
             <th>Name</th>
@@ -52,11 +45,9 @@
 
               </tr>
             <?php } ?>
-                  <tr><td><button onclick="window.location.href='index.php?action=newTask&listId= <?php  echo $list->id?>'" type="button">Add Task</td></tr>
+                  <tr><td><button class="btn btn-secondary btn-sm" onclick="window.location.href='index.php?action=newTask&listId= <?php  echo $list->id?>'" type="button">Add Task</td></tr>
         </tr>
-        <tr>
 
-        </tr>
 
       <?php } ?>
       </table>
