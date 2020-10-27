@@ -189,6 +189,8 @@ function listLists() {
   $results = array();
   $data = Lists::getList(100);
   $results['lists'] = $data['results'];
+  $statusResults = Status::getStatus();
+  $results['status'] = $statusResults['results'];
 
   $results['pageTitle'] = "All Lists";
 

@@ -71,18 +71,34 @@ public static function getById( $id ) {
   if ( $row ) return new Task( $row );
 }
 
-public static function getByList( $list_id, $sortStatus) {
+public static function getByList( $list_id, $sortStatus, $sortFilter) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   if ($sortStatus) {
-    $sql = "SELECT * FROM tasks WHERE list_id = :list_id
-    ORDER BY duration " . $sortStatus;
-    $st = $conn->prepare( $sql );
-    $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+    if ($sortFilter != "none" && $sortFilter) {
+      $sql = "SELECT * FROM tasks WHERE list_id = :list_id AND status = :sortFilter";
+      $st = $conn->prepare( $sql );
+      $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+      $st->bindValue(":sortFilter", $sortFilter, PDO::PARAM_INT);
+    }else{
+      $sql = "SELECT * FROM tasks WHERE list_id = :list_id
+      ORDER BY duration " . $sortStatus;
+      $st = $conn->prepare( $sql );
+      $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+
+    }
 
   }else {
-    $sql = "SELECT * FROM tasks WHERE list_id = :list_id";
-    $st = $conn->prepare( $sql );
-    $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+    if ($sortFilter != "none" && $sortFilter) {
+      $sql = "SELECT * FROM tasks WHERE list_id = :list_id AND status = :sortFilter";
+      $st = $conn->prepare( $sql );
+      $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+      $st->bindValue(":sortFilter", $sortFilter, PDO::PARAM_INT);
+    }else {
+      $sql = "SELECT * FROM tasks WHERE list_id = :list_id";
+      $st = $conn->prepare( $sql );
+      $st->bindValue( ":list_id", $list_id, PDO::PARAM_INT );
+    }
+
   }
 
   $st->execute();

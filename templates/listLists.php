@@ -15,12 +15,29 @@
       <button class="btn btn-primary" onclick="window.location.href='index.php?action=newList'" type="button">
         New List
       </button>
-      <button onclick="window.location.href='index.php?sortStatus=<?php if($_GET['sortStatus'] == 'ASC' || !$_GET['sortStatus']) {
+      <button onclick="window.location.href='index.php?sortFilter=<?php if(!$_POST['sortFilter']){echo "none";}else {echo $_POST['sortFilter'];} ?>&sortStatus=<?php if($_GET['sortStatus'] == 'ASC' || !$_GET['sortStatus']) {
         $sortStatus = 'DESC';
       }else{
         $sortStatus ='ASC';
       };
       echo $sortStatus?>'" type="button" name="sortStatus">Sort</button>
+
+<form class="" action="index.php" method="post">
+  <select   name="sortFilter" id="status" required value="" >
+    <?php
+
+    foreach ($results['status'] as $statusList) {
+
+      ?>
+      <option value="<?php echo $statusList->status ?>"> <?php echo $statusList->status ?></option>
+
+
+     <?php } ?>
+     <option value="none">None</option>
+  </select>
+  <button type="submit" name="button">Submit</button>
+</form>
+
       <table class="table table-sm table-borderless">
 
 
@@ -29,7 +46,7 @@
         <tr>
 
           <td><b><a href="index.php?action=editList&listId= <?php echo $list->id ?>"><?php echo $list->name?></a></b></td>
-          <?php $taskData = Task::getByList((int ) $listNumber, $_GET['sortStatus']);
+          <?php $taskData = Task::getByList((int ) $listNumber, $_GET['sortStatus'], $_POST['sortFilter']);
             $results['tasks'] = $taskData['results']; ?>
             <tr>
             <th>Name</th>
