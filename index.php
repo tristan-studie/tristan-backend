@@ -2,7 +2,7 @@
 require( "config.php" );
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
-
+//depending on the action given, call a function
 switch ( $action ) {
   case 'newList':
     newList();
@@ -25,7 +25,7 @@ switch ( $action ) {
   default:
     listLists();
 }
-
+//to create a new list
 function newList() {
 
   $results = array();
@@ -50,7 +50,7 @@ function newList() {
     require( TEMPLATE_PATH . "/editList.php" );
   }
 }
-
+//To create a new task
 function newTask() {
 
   $results = array();
@@ -78,7 +78,7 @@ function newTask() {
     require( TEMPLATE_PATH . "/editTask.php" );
   }
 }
-
+//Edit a list
 function editList() {
 
   $results = array();
@@ -107,7 +107,7 @@ function editList() {
   }
 
 }
-
+//Edit a task
 function editTask() {
 
   $results = array();
@@ -140,7 +140,7 @@ function editTask() {
   }
 
 }
-
+//Delete a list
 function deleteList() {
 
   $results = array();
@@ -162,7 +162,7 @@ function deleteList() {
     require( TEMPLATE_PATH . "/editList.php" );
   }
 }
-
+//Delete a task
 function deleteTask() {
 
   $results = array();
@@ -184,7 +184,7 @@ function deleteTask() {
     require( TEMPLATE_PATH . "/editTask.php" );
   }
 }
-
+//List all lists
 function listLists() {
   $results = array();
   $data = Lists::getList(100);

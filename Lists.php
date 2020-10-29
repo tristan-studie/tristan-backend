@@ -25,6 +25,7 @@ public function storeFormValues($params){
   $this->__construct($params);
 }
 
+//Get all lists
 public static function getList( $numRows=1000000, $order="name ASC" ) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM lists
@@ -46,6 +47,7 @@ public static function getList( $numRows=1000000, $order="name ASC" ) {
   return ( array ( "results" => $list, "totallists" => $totallists[0] ) );
 }
 
+//Get list associated with the given id
 public static function getById( $id ) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $sql = "SELECT * FROM lists WHERE id = :id";
@@ -58,7 +60,7 @@ public static function getById( $id ) {
 }
 
 
-
+//Create list with the name the user enters
 public function storeList(){
 
 if(!is_null($this->id)) trigger_error("List::insert(): Attempt to insert a List object that already has its ID property set (to $this->id).", E_USER_ERROR);
@@ -72,6 +74,7 @@ $this->id = $conn->lastInsertId();
 $conn = null;
 }
 
+//Update list iwht user submitted name
 public function update() {
 
   if ( is_null( $this->id ) ) trigger_error ( "List::update(): Attempt to update a List object that does not have its ID property set.", E_USER_ERROR );
@@ -84,7 +87,7 @@ public function update() {
   $st->execute();
   $conn = null;
 }
-
+//Delete list associated with the given id
 public static function delete($id) {
 
 

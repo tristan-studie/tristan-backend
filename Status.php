@@ -25,6 +25,7 @@ public function storeFormValues($params){
   $this->__construct($params);
 }
 
+//Get list of all Statusses
 public static function getStatus( $numRows=1000000, $order="ASC" ) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM status

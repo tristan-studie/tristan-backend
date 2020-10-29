@@ -39,7 +39,7 @@ public function __construct($data=array()){
 public function storeFormValues($params){
   $this->__construct($params);
 }
-
+//get list of all tasks
 public static function getList( $numRows=1000000, $order=" ASC" ) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM tasks
@@ -59,7 +59,7 @@ public static function getList( $numRows=1000000, $order=" ASC" ) {
   $conn = null;
   return ( array ( "results" => $list ) );
 }
-
+//Get task associated with the given id
 public static function getById( $id ) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $sql = "SELECT * FROM tasks WHERE id = :id";
@@ -71,6 +71,7 @@ public static function getById( $id ) {
   if ( $row ) return new Task( $row );
 }
 
+//Get tasks from list that is associated with the list id, and optionally apply sort or filter
 public static function getByList( $list_id, $sortStatus, $sortFilter) {
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   if ($sortStatus) {
@@ -117,11 +118,7 @@ public static function getByList( $list_id, $sortStatus, $sortFilter) {
   // if ( $row ) return new Task( $row );
 }
 
-
-
-
-
-
+//Save Task to database
 public function storeTask(){
 
 if(!is_null($this->id)) trigger_error("Task::insert(): Attempt to insert a Task object that already has its ID property set (to $this->id).", E_USER_ERROR);
@@ -138,6 +135,7 @@ $this->id = $conn->lastInsertId();
 $conn = null;
 }
 
+//Update Task in database with data the user submits
 public function update() {
 
   if ( is_null( $this->id ) ) trigger_error ( "Task::update(): Attempt to update a Task object that does not have its ID property set.", E_USER_ERROR );
@@ -153,9 +151,8 @@ public function update() {
   $conn = null;
 }
 
+//Delete task from the database
 public static function delete($id) {
-
-
 
   $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
   $st = $conn->prepare ( "DELETE FROM tasks WHERE id = :id LIMIT 1" );

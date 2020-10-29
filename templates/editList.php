@@ -1,5 +1,3 @@
-
-
 <main>
 
       <h1><?php echo $results['pageTitle']?></h1>
