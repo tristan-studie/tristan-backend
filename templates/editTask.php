@@ -1,4 +1,4 @@
-
+<?php require( TEMPLATE_PATH . "/include/header.php" ); ?>
 
 <main>
 
@@ -60,3 +60,4 @@
             <?php } ?>
     </div>
   </main>
+  <?php require( TEMPLATE_PATH . "/include/footer.php" ); ?>

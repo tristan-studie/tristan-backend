@@ -1,3 +1,4 @@
+<?php require( TEMPLATE_PATH . "/include/header.php" ); ?>
 <main>
 
       <h1><?php echo $results['pageTitle']?></h1>
@@ -35,3 +36,4 @@
             <?php } ?>
     </div>
   </main>
+<?php require( TEMPLATE_PATH . "/include/footer.php" ); ?>

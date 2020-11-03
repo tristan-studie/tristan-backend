@@ -1,5 +1,4 @@
 <?php require( TEMPLATE_PATH . "/include/header.php" ); ?>
-  <body>
   	<div class="container">
 
       <?php if ( isset( $results['statusMessage'] ) ) { ?>
@@ -15,7 +14,7 @@
       <button class="btn btn-primary" onclick="window.location.href='index.php?action=newList'" type="button">
         New List
       </button>
-      <button onclick="window.location.href='index.php?sortFilter=<?php if(!$_POST['sortFilter']){echo "none";}else {echo $_POST['sortFilter'];} ?>&sortStatus=<?php if($_GET['sortStatus'] == 'ASC' || !$_GET['sortStatus']) {
+      <button onclick="window.location.href='index.php?sortFilter=<?php if(!$_POST['sortFilter']){$_POST['sortFilter'];} ?>&sortStatus=<?php if($_GET['sortStatus'] == 'ASC' || !$_GET['sortStatus']) {
         $sortStatus = 'DESC';
       }else{
         $sortStatus ='ASC';
@@ -23,7 +22,7 @@
       echo $sortStatus?>'" type="button" name="sortStatus">Sort</button>
 
 <form class="" action="index.php" method="post">
-  <select   name="sortFilter" id="status" required value="" >
+  <select    name="sortFilter" id="status" required value="" >
     <?php
 
     foreach ($results['status'] as $statusList) {
@@ -72,6 +71,4 @@
 
 
   	</div>
-  </body>
-
-</html>
+    <?php require( TEMPLATE_PATH . "/include/footer.php" ); ?>
